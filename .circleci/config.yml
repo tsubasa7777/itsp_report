@@ -1,9 +1,44 @@
-version: 2.1
+version: 2
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - restore_cache:
+          key: docker-{{ checksum ".circleci/config.yml" }}-{{ checksum "docker-compose.yml" }}-{{ checksum "Dockerfile" }}
+          paths: ~/caches/images.tar
+      - run:
+          name: Check cache file, if not exists then pull images and generate cache.
+          command: |
+            if [ ! -f ~/caches/images.tar ]; then
+              docker-compose build
+              mkdir -p ~/caches
+              docker save $(docker images | awk 'NR>=2 && ! /^<none>/{print $1}') -o ~/caches/images.tar
+            fi
+      - save_cache:
+          key: docker-{{ checksum ".circleci/config.yml" }}-{{ checksum "docker-compose.yml" }}-{{ checksum "Dockerfile" }}
+          paths: ~/caches/images.tar
 
-orbs:
-    hello: circleci/hello-build@0.0.7 # uses the circleci/buildpack-deps Docker image
+  test:
+    machine: true
+    steps:
+      - checkout
+      - restore_cache:
+          key: docker-{{ checksum ".circleci/config.yml" }}-{{ checksum "docker-compose.yml" }}-{{ checksum "Dockerfile" }}
+          paths: ~/caches/images.tar
+      #- run: <テスト用データベース構築のためのコマンド>
+      #- run: <テスト実行のためのコマンド　※出力先を"test_results/hoge.xml"に変更>
+      - run:
+        command: |
+          echo "OK!"
+      - store_test_results:
+                path: test_results
 
 workflows:
-    "Hello Workflow":
-        jobs:
-          - hello/hello-build
+  version: 2
+  todo_server_checker:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
