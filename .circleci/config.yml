@@ -12,21 +12,27 @@ jobs:
     steps:
       - checkout
       - run: 
-          name: Server Awaken
+          name: サーバー起動
           command: python todo_server.py
           background: true
       - run: 
-          name: SLEEP 5 Seconds because of server awaken
+          name: サーバー起動待ち(5秒間)
           command: sleep 5
       - run: 
-          name: 一件もない時の全取得
+          name: TODOが一件もない時、全取得　→　Not Found(正常)
           command: curl -X GET http://localhost:8080/api/v1/event
       - run: 
-          name: イベント登録(正常)
+          name: TODO登録　→　登録成功(正常)
           command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00+09:00", "title":"レポート提出", "memo":""}' http://localhost:8080/api/v1/event
       - run: 
-          name: 一件ある時の全取得
+          name: TODOが一件、全取得(正常)
           command: curl -X GET http://localhost:8080/api/v1/event
+      - run: 
+          name: TODOが一件、存在するID指定取得(正常)
+          command: curl -X GET http://localhost:8080/api/v1/event/1
+      - run: 
+          name: TODOが一件、存在しないID指定取得(異常)
+          command: curl -X GET http://localhost:8080/api/v1/event/1
 
 workflows:
   version: 2
