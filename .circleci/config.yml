@@ -23,7 +23,7 @@ jobs:
           command: curl -X GET http://localhost:8080/api/v1/event/
       - run: 
           name: イベント登録(正常)
-          command: curl -X POST -H "Content-Type: application/json" -d '{"deadline":"2019-06-11T14:00:00+09:00"}' http://localhost:8080/api/v1/todo
+          command: curl -X POST -H "Content-Type":" application/json" -d '{"deadline"":""2019-06-11T14:00:00+09:00"}' http://localhost:8080/api/v1/todo
 
 
 
