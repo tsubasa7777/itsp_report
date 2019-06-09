@@ -11,6 +11,7 @@ jobs:
       - image: circleci/python:3.7.3
     steps:
       - run: pwd
+      - run: ls
       - run: python todo_server.py
       - run: curl http://localhost:8080
 
