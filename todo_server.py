@@ -142,6 +142,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             print(e)
             self.wfile.write("400 Bad Request\n".encode("utf-8"))
             self.wfile.write("{\"status\":\"failure\",\"message\":\"invalid date format\"}\n".encode("utf-8"))
+            self.wfile.write(e.encode("utf-8"))
             return
 
 
