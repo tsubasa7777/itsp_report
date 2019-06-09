@@ -14,7 +14,7 @@ jobs:
       - run: pwd
       - run: ls
       - run: 
-        name: Server Awaken
+        name: "Server Awaken"
         command: python todo_server.py
         background: true
       - run: curl http://localhost:8080
