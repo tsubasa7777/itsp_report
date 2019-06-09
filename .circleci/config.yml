@@ -12,11 +12,18 @@ jobs:
     steps:
       - checkout
       - run: 
-          name: "Server Awaken"
+          name: Server Awaken
           command: python todo_server.py
           background: true
-      - run: sleep 5
-      - run: curl -X GET http://localhost:8080/api/v1/event/
+      - run: 
+          name: SLEEP 5 Seconds because of server awaken
+          command: sleep 5
+      - run: 
+          name: 一件もない時の全取得
+          command: curl -X GET http://localhost:8080/api/v1/event/
+      - run: 
+          name: イベント登録(正常)
+          command: curl -X POST -H "Content-Type: application/json" -d '{"deadline":"2019-06-11T14:00:00+09:00"}' http://localhost:8080/api/v1/todo
 
 
 
