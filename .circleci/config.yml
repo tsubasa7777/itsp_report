@@ -7,10 +7,11 @@ jobs:
       - checkout
 
   test:
+    docker:
+      - image: circleci/python:3.7.3
     steps:
       - run:
-        command:
-          echo "OK"
+        command: echo "OK"
 
 workflows:
   version: 2
