@@ -11,13 +11,13 @@ jobs:
       - image: circleci/python:3.7.3
     steps:
       - checkout
-      - run: pwd
-      - run: ls
       - run: 
           name: "Server Awaken"
           command: python todo_server.py
           background: true
+      - run: sleep 5
       - run: curl -X GET http://localhost:8080/api/v1/event/
+
 
 
 workflows:
