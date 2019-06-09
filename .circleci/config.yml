@@ -11,8 +11,8 @@ jobs:
     steps:
       - checkout
       - run:
-        command: |
-          echo "OK!"
+        command:
+          echo "OK"
 
 workflows:
   version: 2
