@@ -17,7 +17,7 @@ jobs:
           name: "Server Awaken"
           command: python todo_server.py
           background: true
-      - run: curl http://localhost:8080
+      - run: curl -X GET http://localhost:8080/api/v1/event/
 
 
 workflows:
