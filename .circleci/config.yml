@@ -1,38 +1,18 @@
 version: 2
 jobs:
   build:
-    machine: true
+    docker:
+      - image: circleci/python:3.7.3 # primary container
     steps:
       - checkout
-      - restore_cache:
-          key: docker-{{ checksum ".circleci/config.yml" }}-{{ checksum "docker-compose.yml" }}-{{ checksum "Dockerfile" }}
-          paths: ~/caches/images.tar
-      - run:
-          name: Check cache file, if not exists then pull images and generate cache.
-          command: |
-            if [ ! -f ~/caches/images.tar ]; then
-              docker-compose build
-              mkdir -p ~/caches
-              docker save $(docker images | awk 'NR>=2 && ! /^<none>/{print $1}') -o ~/caches/images.tar
-            fi
-      - save_cache:
-          key: docker-{{ checksum ".circleci/config.yml" }}-{{ checksum "docker-compose.yml" }}-{{ checksum "Dockerfile" }}
-          paths: ~/caches/images.tar
 
   test:
     machine: true
     steps:
       - checkout
-      - restore_cache:
-          key: docker-{{ checksum ".circleci/config.yml" }}-{{ checksum "docker-compose.yml" }}-{{ checksum "Dockerfile" }}
-          paths: ~/caches/images.tar
-      #- run: <テスト用データベース構築のためのコマンド>
-      #- run: <テスト実行のためのコマンド　※出力先を"test_results/hoge.xml"に変更>
       - run:
         command: |
           echo "OK!"
-      - store_test_results:
-                path: test_results
 
 workflows:
   version: 2
