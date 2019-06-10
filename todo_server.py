@@ -123,9 +123,11 @@ class RequestHandler(BaseHTTPRequestHandler):
         for value in data.values():
             value_array.append(value)
         match_object = re.match("[0-9]{4}-[0-9]{2}-[0-9]{2}(T|t)[0-9]{2}:[0-9]{2}:[0-9]{2}((\+|-)[0-9]{2}:[0-9]{2}|Z|z)", value_array[0])
-        if len(value_array[0]) == match_object.end():
-            pass
-        else:
+        try:
+            if len(value_array[0]) == match_object.end():
+                pass
+        except Exception as e:
+            print(e)
             self.wfile.write("400 Bad Request\n".encode("utf-8"))
             self.wfile.write("{\"status\":\"failure\",\"message\":\"invalid date format\"}\n".encode("utf-8"))
             return

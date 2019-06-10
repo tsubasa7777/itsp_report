@@ -51,6 +51,15 @@ jobs:
       - run: 
           name: TODO登録(id:5)(日付におけるdate-timeで"t"を使う)　→　登録成功(正常)
           command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "title":"レポート提出", "memo":""}' http://localhost:8080/api/v1/event
+      - run: 
+          name: TODO登録("deadline"がない)　→　登録失敗(異常)
+          command: curl -X POST -H "Content-Type:application/json" -d '{"title":"レポート提出", "memo":""}' http://localhost:8080/api/v1/event
+      - run: 
+          name: TODO登録("title"がない)　→　登録失敗(異常)
+          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "memo":""}' http://localhost:8080/api/v1/event
+      - run: 
+          name: TODO登録("memo"がない)　→　登録失敗(異常)
+          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "title":"レポート提出"}' http://localhost:8080/api/v1/event
       
 
 workflows:
