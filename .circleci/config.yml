@@ -19,38 +19,38 @@ jobs:
           name: サーバー起動待ち(5秒間)
           command: sleep 5
       - run: 
-          name: TODOが一件もない時、全取得　→　Not Found(正常)
+          name: TODOが1件もない時、全取得　→　Not Found(正常)
           command: curl -X GET http://localhost:8080/api/v1/event
       - run: 
-          name: TODOが一件もない時、存在しないID指定取得→　Not Found(正常)
+          name: TODOが1件もない時、存在しないID指定取得→　Not Found(正常)
           command: curl -X GET http://localhost:8080/api/v1/event/1
       - run: 
           name: TODO登録(id:1)　→　登録成功(正常)
-          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00+09:00", "title":"レポート提出", "memo":""}' http://localhost:8080/api/v1/event
+          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00+09:00", "title":"1番目のTODO", "memo":""}' http://localhost:8080/api/v1/event
       - run: 
-          name: TODOが一件、全取得(正常)
+          name: TODOが1件、全取得(正常)
           command: curl -X GET http://localhost:8080/api/v1/event
       - run: 
-          name: TODOが一件、存在するID(id:1を指定)指定取得(正常)
+          name: TODOが1件、存在するID(id:1を指定)指定取得(正常)
           command: curl -X GET http://localhost:8080/api/v1/event/1
       - run: 
-          name: TODOが一件、存在しないID(id:５を指定)指定取得 →　Not Found(正常)
+          name: TODOが1件、存在しないID(id:５を指定)指定取得 →　Not Found(正常)
           command: curl -X GET http://localhost:8080/api/v1/event/5
       - run: 
           name: TODO登録(日付がRFC3339形式の文字列ではない)　→　登録失敗(異常)
-          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00", "title":"レポート提出", "memo":""}' http://localhost:8080/api/v1/event
+          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00", "title":"", "memo":""}' http://localhost:8080/api/v1/event
       - run: 
           name: TODO登録(id:2)(日付におけるtime-numoffsetで”-”を使う)　→　登録成功(正常)
-          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00-09:00", "title":"レポート提出", "memo":""}' http://localhost:8080/api/v1/event
+          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00-09:00", "title":"2番目のTODO", "memo":"No.2"}' http://localhost:8080/api/v1/event
       - run: 
           name: TODO登録(id:3)(日付におけるtime-offsetで"Z"を使う)　→　登録成功(正常)
-          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00Z", "title":"レポート提出", "memo":""}' http://localhost:8080/api/v1/event
+          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00Z", "title":"3番目のTODO", "memo":"Third"}' http://localhost:8080/api/v1/event
       - run: 
           name: TODO登録(id:4)(日付におけるtime-offsetで"z"を使う)　→　登録成功(正常)
-          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00z", "title":"レポート提出", "memo":""}' http://localhost:8080/api/v1/event
+          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00z", "title":"4番目のTODO", "memo":"for"}' http://localhost:8080/api/v1/event
       - run: 
           name: TODO登録(id:5)(日付におけるdate-timeで"t"を使う)　→　登録成功(正常)
-          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "title":"レポート提出", "memo":""}' http://localhost:8080/api/v1/event
+          command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "title":"5番目のTODO", "memo":"5"}' http://localhost:8080/api/v1/event
       - run: 
           name: TODO登録("deadline"がない)　→　登録失敗(異常)
           command: curl -X POST -H "Content-Type:application/json" -d '{"title":"レポート提出", "memo":""}' http://localhost:8080/api/v1/event
@@ -61,10 +61,10 @@ jobs:
           name: TODO登録("memo"がない)　→　登録失敗(異常)
           command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "title":"レポート提出"}' http://localhost:8080/api/v1/event
       - run: 
-          name: TODOが一件、全取得(正常)
+          name: TODOが5件、全取得(正常)
           command: curl -X GET http://localhost:8080/api/v1/event
       - run: 
-          name: TODOが一件、存在するID(id:5を指定)指定取得(正常)
+          name: TODOが5件、存在するID(id:5を指定)指定取得(正常)
           command: curl -X GET http://localhost:8080/api/v1/event/5
       
 
