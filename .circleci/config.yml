@@ -32,7 +32,7 @@ jobs:
           command: curl -X GET http://localhost:8080/api/v1/event/1
       - run: 
           name: TODOが一件、存在しないID指定取得(異常)
-          command: curl -X GET http://localhost:8080/api/v1/event/1
+          command: curl -X GET http://localhost:8080/api/v1/event/5
 
 workflows:
   version: 2

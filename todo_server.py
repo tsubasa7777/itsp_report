@@ -41,7 +41,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                     self.wfile.write("404 Not Found\n".encode("utf-8"))
                     return
                 self.wfile.write("200 OK\n".encode("utf-8"))
-                self.wfile.write(("{\"event\":" + (str(json.dumps(data_array, indent=2))) + "}\n").encode("utf-8"))
+                self.wfile.write(("{\"event\":" + (str(json.dumps(data_array, ensure_ascii=False, indent=2))) + "}\n").encode("utf-8"))
             except Exception as e:
                 print(e)
                 return
@@ -56,7 +56,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 for data in data_array:
                     if data['id'] == get_id:
                         self.wfile.write("200 OK\n".encode("utf-8"))
-                        self.wfile.write(((str(json.dumps(data, indent=2))) + "\n").encode("utf-8"))
+                        self.wfile.write(((str(json.dumps(data, ensure_ascii=False, indent=2))) + "\n").encode("utf-8"))
                         return
                 self.wfile.write("404 Not Found\n".encode("utf-8"))
                 return
@@ -122,10 +122,13 @@ class RequestHandler(BaseHTTPRequestHandler):
         value_array = []
         for value in data.values():
             value_array.append(value)
-        print(value_array[0])
         match_object = re.match("[0-9]{4}-[0-9]{2}-[0-9]{2}(T|t)[0-9]{2}:[0-9]{2}:[0-9]{2}((\+|-)[0-9]{2}:[0-9]{2}|Z|z)", value_array[0])
         if len(value_array[0]) == match_object.end():
-            print("OK")
+            pass
+        else:
+            self.wfile.write("400 Bad Request\n".encode("utf-8"))
+            self.wfile.write("{\"status\":\"failure\",\"message\":\"invalid date format\"}\n".encode("utf-8"))
+            return
 
         try:
             if "deadline" == key_array[0]:  # 形式のチェック
