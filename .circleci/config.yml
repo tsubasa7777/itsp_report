@@ -60,6 +60,12 @@ jobs:
       - run: 
           name: TODO登録("memo"がない)　→　登録失敗(異常)
           command: curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "title":"レポート提出"}' http://localhost:8080/api/v1/event
+      - run: 
+          name: TODOが一件、全取得(正常)
+          command: curl -X GET http://localhost:8080/api/v1/event
+      - run: 
+          name: TODOが一件、存在するID(id:5を指定)指定取得(正常)
+          command: curl -X GET http://localhost:8080/api/v1/event/5
       
 
 workflows:
