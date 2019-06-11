@@ -19,7 +19,7 @@ TODOの要素として“deadline"、“title"、“memo"の3つが必ずある�
 また、“deadline"に関しては、日付がRFC3339形式の文字列かどうかチェックする。このサーバーが受理する日付は“4桁の数字-2桁の数字-2桁の数字(T/t)2桁の数字:2桁の数字:2桁の数字(((+/-)2桁の数字:2桁の数字)/Z/z)"の形式に沿ったものである。RFC3339形式でない場合は、“Bad Request"をレスポンスとして返す。
 以上のチェックを通過したTODOをid番号を付け加えて、配列data_arrayに格納する。
 # CircleCIによるテスト結果
-``
+```
 curl -X GET http://localhost:8080/api/v1/event/5  
 200 OK  
 {  
@@ -28,4 +28,4 @@ curl -X GET http://localhost:8080/api/v1/event/5
   "title": "5番目のTODO",  
   "memo": "5"  
 }  
-``
+```
