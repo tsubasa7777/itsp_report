@@ -20,6 +20,40 @@ TODOの要素として“deadline"、“title"、“memo"の3つが必ずある�
 以上のチェックを通過したTODOをid番号を付け加えて、配列data_arrayに格納する。
 # CircleCIによるテスト結果
 ```
+curl -X GET http://localhost:8080/api/v1/event
+404 Not Found
+```
+
+```
+curl -X GET http://localhost:8080/api/v1/event/1
+404 Not Found
+```
+
+```
+curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00+09:00", "title":"1番目のTODO", "memo":""}' http://localhost:8080/api/v1/event
+200 OK
+{"status":"success","message":"registered","id":1}
+```
+
+```
+```
+
+```
+```
+
+```
+```
+
+```
+```
+
+```
+```
+
+```
+```
+
+```
 curl -X GET http://localhost:8080/api/v1/event/5
 200 OK
 {
