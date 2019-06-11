@@ -77,48 +77,56 @@ curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:0
 {"status":"failure","message":"invalid date format"}
 ```
 
+* TODO登録(id:2)(日付におけるtime-numoffsetで”-”を使う)　→　登録成功(正常)
 ```
 curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00-09:00", "title":"2番目のTODO", "memo":"No.2"}' http://localhost:8080/api/v1/event
 200 OK
 {"status":"success","message":"registered","id":2}
 ```
 
+* TODO登録(id:3)(日付におけるtime-offsetで"Z"を使う)　→　登録成功(正常)
 ```
 curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00Z", "title":"3番目のTODO", "memo":"Third"}' http://localhost:8080/api/v1/event
 200 OK
 {"status":"success","message":"registered","id":3}
 ```
 
+* TODO登録(id:4)(日付におけるtime-offsetで"z"を使う)　→　登録成功(正常)
 ```
 curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00z", "title":"4番目のTODO", "memo":"for"}' http://localhost:8080/api/v1/event
 200 OK
 {"status":"success","message":"registered","id":4}
 ```
 
+* TODO登録(id:5)(日付におけるdate-timeで"t"を使う)　→　登録成功(正常)
 ```
 curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "title":"5番目のTODO", "memo":"5"}' http://localhost:8080/api/v1/event
 200 OK
 {"status":"success","message":"registered","id":5}
 ```
 
+* TODO登録("deadline"がない)　→　登録失敗(異常)
 ```
 curl -X POST -H "Content-Type:application/json" -d '{"title":"レポート提出", "memo":""}' http://localhost:8080/api/v1/event
 400 Bad Request
 {"status":"failure","message":"invalid date format"}
 ```
 
+* TODO登録("title"がない)　→　登録失敗(異常)
 ```
 curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "memo":""}' http://localhost:8080/api/v1/event
 400 Bad Request
 {"status":"failure","message":"invalid date format"}
 ```
 
+* TODO登録("memo"がない)　→　登録失敗(異常)
 ```
 curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "title":"レポート提出"}' http://localhost:8080/api/v1/event
 400 Bad Request
 {"status":"failure","message":"invalid date format"}
 ```
 
+* TODOが5件、全取得(正常)
 ```
 curl -X GET http://localhost:8080/api/v1/event
 200 OK
@@ -156,6 +164,7 @@ curl -X GET http://localhost:8080/api/v1/event
 ]}
 ```
 
+* TODOが5件、存在するID(id:5を指定)指定取得(正常)
 ```
 curl -X GET http://localhost:8080/api/v1/event/5
 200 OK
