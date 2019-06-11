@@ -36,21 +36,117 @@ curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:0
 ```
 
 ```
+curl -X GET http://localhost:8080/api/v1/event
+200 OK
+{"event":[
+  {
+    "id": 1,
+    "deadline": "2019-06-11T14:00:00+09:00",
+    "title": "1番目のTODO",
+    "memo": ""
+  }
+]}
 ```
 
 ```
+curl -X GET http://localhost:8080/api/v1/event/1
+200 OK
+{
+  "id": 1,
+  "deadline": "2019-06-11T14:00:00+09:00",
+  "title": "1番目のTODO",
+  "memo": ""
+}
 ```
 
 ```
+curl -X GET http://localhost:8080/api/v1/event/5
+404 Not Found
 ```
 
 ```
+curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00", "title":"", "memo":""}' http://localhost:8080/api/v1/event
+400 Bad Request
+{"status":"failure","message":"invalid date format"}
 ```
 
 ```
+curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00-09:00", "title":"2番目のTODO", "memo":"No.2"}' http://localhost:8080/api/v1/event
+200 OK
+{"status":"success","message":"registered","id":2}
 ```
 
 ```
+curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00Z", "title":"3番目のTODO", "memo":"Third"}' http://localhost:8080/api/v1/event
+200 OK
+{"status":"success","message":"registered","id":3}
+```
+
+```
+curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00z", "title":"4番目のTODO", "memo":"for"}' http://localhost:8080/api/v1/event
+200 OK
+{"status":"success","message":"registered","id":4}
+```
+
+```
+curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "title":"5番目のTODO", "memo":"5"}' http://localhost:8080/api/v1/event
+200 OK
+{"status":"success","message":"registered","id":5}
+```
+
+```
+curl -X POST -H "Content-Type:application/json" -d '{"title":"レポート提出", "memo":""}' http://localhost:8080/api/v1/event
+400 Bad Request
+{"status":"failure","message":"invalid date format"}
+```
+
+```
+curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "memo":""}' http://localhost:8080/api/v1/event
+400 Bad Request
+{"status":"failure","message":"invalid date format"}
+```
+
+```
+curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11t14:00:00+09:00", "title":"レポート提出"}' http://localhost:8080/api/v1/event
+400 Bad Request
+{"status":"failure","message":"invalid date format"}
+```
+
+```
+curl -X GET http://localhost:8080/api/v1/event
+200 OK
+{"event":[
+  {
+    "id": 1,
+    "deadline": "2019-06-11T14:00:00+09:00",
+    "title": "1番目のTODO",
+    "memo": ""
+  },
+  {
+    "id": 2,
+    "deadline": "2019-06-11T14:00:00-09:00",
+    "title": "2番目のTODO",
+    "memo": "No.2"
+  },
+  {
+    "id": 3,
+    "deadline": "2019-06-11T14:00:00Z",
+    "title": "3番目のTODO",
+    "memo": "Third"
+  },
+  {
+    "id": 4,
+    "deadline": "2019-06-11T14:00:00z",
+    "title": "4番目のTODO",
+    "memo": "for"
+  },
+  {
+    "id": 5,
+    "deadline": "2019-06-11t14:00:00+09:00",
+    "title": "5番目のTODO",
+    "memo": "5"
+  }
+]}
 ```
 
 ```
