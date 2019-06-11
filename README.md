@@ -19,22 +19,26 @@ TODOの要素として“deadline"、“title"、“memo"の3つが必ずある�
 また、“deadline"に関しては、日付がRFC3339形式の文字列かどうかチェックする。このサーバーが受理する日付は“4桁の数字-2桁の数字-2桁の数字(T/t)2桁の数字:2桁の数字:2桁の数字(((+/-)2桁の数字:2桁の数字)/Z/z)"の形式に沿ったものである。RFC3339形式でない場合は、“Bad Request"をレスポンスとして返す。
 以上のチェックを通過したTODOをid番号を付け加えて、配列data_arrayに格納する。
 # CircleCIによるテスト結果
+* TODOが1件もない時、全取得　→　Not Found(正常)
 ```
 curl -X GET http://localhost:8080/api/v1/event
 404 Not Found
 ```
 
+* TODOが1件もない時、存在しないID指定取得→　Not Found(正常)
 ```
 curl -X GET http://localhost:8080/api/v1/event/1
 404 Not Found
 ```
 
+* TODO登録(id:1)　→　登録成功(正常)
 ```
 curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00+09:00", "title":"1番目のTODO", "memo":""}' http://localhost:8080/api/v1/event
 200 OK
 {"status":"success","message":"registered","id":1}
 ```
 
+* TODOが1件、全取得(正常)
 ```
 curl -X GET http://localhost:8080/api/v1/event
 200 OK
@@ -48,6 +52,7 @@ curl -X GET http://localhost:8080/api/v1/event
 ]}
 ```
 
+* TODOが1件、存在するID(id:1を指定)指定取得(正常)
 ```
 curl -X GET http://localhost:8080/api/v1/event/1
 200 OK
@@ -59,11 +64,13 @@ curl -X GET http://localhost:8080/api/v1/event/1
 }
 ```
 
+* TODOが1件、存在しないID(id:５を指定)指定取得 →　Not Found(正常)
 ```
 curl -X GET http://localhost:8080/api/v1/event/5
 404 Not Found
 ```
 
+* TODO登録(日付がRFC3339形式の文字列ではない)　→　登録失敗(異常)
 ```
 curl -X POST -H "Content-Type:application/json" -d '{"deadline":"2019-06-11T14:00:00", "title":"", "memo":""}' http://localhost:8080/api/v1/event
 400 Bad Request
