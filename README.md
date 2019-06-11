@@ -1,4 +1,11 @@
-# 作成したTODO管理のHTTPサーバーの概要
+# 概要
+* 使用言語 : Python
+* CI : CircleCI
+# 実装機能
+* TODOの追加
+* TODOの全件取得
+* TODOを１件のみ取得
+# 作成したTODO管理のHTTPサーバーの構成
 まず、todo_server.pyを実行しサーバーを起動する。その後、サーバーはGETまたはPSOTリクエストを待ち続ける。サーバーがGETリクエストを受けとった時とPOSTリクエストを受けとった時、それぞれどのような処理を行うか分けて説明していく。
 ## GETリクエストを受けとった時
 まず、リクエストのURLをパースする。http://localhost:8080/ 以降のパスを取得する。(http://localhost:8080/api/v1/event だと api/v1/eventの部分)
