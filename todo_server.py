@@ -105,7 +105,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.wfile.write("{\"status\":\"failure\",\"message\":\"invalid date format\"}\n".encode("utf-8"))
             return
 
-        # todoを取り込む(JSON→辞書式)
+        # todoを取り込む(JSON→辞書型)
         global counter, data_dict
         key_array = []
         data = json.loads(request_body)
